@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araçlar (Toolbox)</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <header class="dashboard-header glass-panel">
+        <div class="logo-container">
+            <div class="logo-icon">Ar</div>
+            <h1 class="logo-text">Araçlar</h1>
+        </div>
+        <div class="header-actions">
+            <!-- Space for future global actions like settings, user profile, etc -->
+        </div>
+    </header>
+
+    <main class="dashboard-main animate-fade-in">
+        <h2 class="section-title">Hoşgeldiniz.</h2>
+        <p class="section-subtitle">Başlamak için bir araç seçin.</p>
+
+        <div class="tools-grid" id="tools-container">
+            <!-- DrumPad Tool Card -->
+            <a href="tools/drumpad/index.html" class="tool-card glass-panel" aria-label="Open DrumPad Tool">
+                <div class="tool-icon">🥁</div>
+                <h3 class="tool-title">DrumPad</h3>
+                <p class="tool-desc">Çok kanallı ses desteği, arkaplan fon dengelemesi (ducking) ve özel ses yükleme
+                    imkanı sunan profesyonel bir tarayıcı tabanlı drumpad uygulaması.</p>
+            </a>
+
+            <!-- Music Player Tool Card -->
+            <a href="tools/musicplayer/index.html" class="tool-card glass-panel" aria-label="Open Music Player Tool">
+                <div class="tool-icon">🎵</div>
+                <h3 class="tool-title">Müzik Oynatıcısı</h3>
+                <p class="tool-desc">Oynatma listesi yönetimi, karıştırma, döngü ve gelişmiş medya kontrollerine sahip
+                    özel bir bağımsız müzik oynatıcı.</p>
+            </a>
+
+            <!-- Placeholder for future tools -->
+            <div class="tool-card glass-panel" style="opacity: 0.5; cursor: not-allowed; border-style: dashed;">
+                <div class="tool-icon">✨</div>
+                <h3 class="tool-title">Çok Yakında</h3>
+                <p class="tool-desc">Araç kutusu deneyiminizi genişletmek için yeni harika özellikler ve araçlar
+                    eklenmeye devam edecek.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => console.log('ServiceWorker registration successful'))
+                    .catch(error => console.log('ServiceWorker registration failed: ', error));
+            });
+        }
+    </script>
+</body>
+
+</html>

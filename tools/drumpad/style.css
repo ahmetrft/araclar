@@ -1,0 +1,410 @@
+/* DrumPad Specific Styling */
+
+body {
+    background: radial-gradient(circle at 50% 10%, #1e293b 0%, #020617 100%);
+    overflow: hidden;
+    /* Prevent body scroll, layout handles internal scroll */
+}
+
+/* Header Elements */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    transition: all var(--transition-fast);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.app-main {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    height: calc(100vh - 73px);
+    /* Minus header height */
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Controls Sidebar */
+.controls-panel {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.controls-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.controls-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.control-group {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.control-group h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+/* Base Buttons */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition-fast);
+    outline: none;
+}
+
+.btn-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btn-primary {
+    background: var(--accent-primary);
+    color: white;
+    box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    font-weight: 800;
+}
+
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.4);
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+.btn-outline:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-toggle {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-toggle[data-state="on"] {
+    background: rgba(16, 185, 129, 0.2);
+    /* Emerald 500 */
+    color: #34d399;
+    /* Emerald 400 */
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+}
+
+.btn-toggle[data-state="on"] .status-indicator {
+    opacity: 1;
+    box-shadow: 0 0 8px currentColor;
+}
+
+.radio-status {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+}
+
+/* Sliders */
+.slider-wrapper {
+    margin-bottom: 1.25rem;
+}
+
+.slider-wrapper:last-child {
+    margin-bottom: 0;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.slider-header span {
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+.styled-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    outline: none;
+}
+
+.styled-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--accent-glow);
+    transition: transform var(--transition-fast);
+}
+
+.styled-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* Workspace / Pad Grid */
+.workspace {
+    flex: 1;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.pad-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    width: 100%;
+    align-content: start;
+}
+
+.empty-state {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+/* Pad UI */
+.drum-pad {
+    aspect-ratio: 16 / 9;
+    min-height: 80px;
+    background: linear-gradient(145deg, rgba(40, 48, 64, 0.9), rgba(20, 25, 34, 0.9));
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.05), 0 5px 15px rgba(0, 0, 0, 0.5);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    word-break: break-all;
+    transition: all 0.1s ease;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle glow effect indicator for readiness */
+.drum-pad::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+.drum-pad:hover {
+    background: linear-gradient(145deg, rgba(60, 70, 90, 0.9), rgba(30, 38, 50, 0.9));
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.1), 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.drum-pad:active,
+.drum-pad.active {
+    background: var(--bg-surface);
+    border-color: var(--accent-primary);
+    transform: translateY(2px) scale(0.98);
+    box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.5), 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.drum-pad:active::after,
+.drum-pad.active::after {
+    background: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.visible {
+    display: flex;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+    background: var(--bg-surface);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .pad-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .app-main {
+        flex-direction: column;
+    }
+
+    .controls-panel {
+        width: 100%;
+        max-height: 40vh;
+    }
+
+    .pad-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

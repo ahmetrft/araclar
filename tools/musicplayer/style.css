@@ -1,0 +1,413 @@
+/* Music Player Styling */
+
+body {
+    background: radial-gradient(circle at 50% -20%, #4c1d95 0%, #0f172a 80%);
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    background: rgba(15, 23, 42, 0.4);
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.95rem;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.header-controls .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.header-controls .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    transition: all var(--transition-fast);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.app-main {
+    padding: 2rem;
+    height: calc(100vh - 73px - 90px);
+    /* Account for header and bottom bar height */
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.playlist-container {
+    flex: 1;
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background: rgba(30, 41, 59, 0.6);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+/* Bottom Bar Dashboard */
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 1000;
+    border-radius: 0;
+    background: rgba(15, 23, 42, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.bottom-bar-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 300px;
+    margin-right: 2rem;
+}
+
+.track-info {
+    width: 100%;
+    min-width: 0;
+}
+
+.now-playing-title-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    cursor: default;
+}
+
+.marquee-text {
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+    transition: transform 0.3s ease-out;
+}
+
+#current-artist {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+    margin-top: 0.2rem;
+}
+
+.bottom-bar-center {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 600px;
+}
+
+.transport {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.transport-btn,
+.transport-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.transport-btn:hover {
+    color: var(--accent-hover);
+    transform: scale(1.1);
+}
+
+.transport-play {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    color: var(--bg-surface) !important;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+    padding-left: 4px;
+    /* Optical center for triangle */
+}
+
+.transport-play.playing {
+    padding-left: 0;
+}
+
+.transport-play:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.transport-toggle {
+    font-size: 1.1rem;
+    opacity: 0.5;
+}
+
+.transport-toggle.active {
+    opacity: 1;
+    color: var(--accent-primary);
+}
+
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.progress-bar-container span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    min-width: 40px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.seek-slider {
+    flex: 1;
+}
+
+.bottom-bar-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    max-width: 300px;
+    margin-left: 2rem;
+}
+
+.volume-slider {
+    width: 100px;
+}
+
+/* Playlist Section */
+.playlist-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.playlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.playlist-header h3 {
+    font-weight: 700;
+}
+
+.playlist-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-danger {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.playlist-list {
+    list-style: none;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-right: 0.5rem;
+}
+
+.playlist-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.playlist-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.playlist-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.playlist-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.playlist-item.active {
+    background: rgba(59, 130, 246, 0.2);
+    border-left: 3px solid var(--accent-primary);
+}
+
+.track-number {
+    width: 30px;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+}
+
+.track-name-wrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    pointer-events: none;
+    margin-right: 10px;
+}
+
+.track-name {
+    display: inline-block;
+    white-space: nowrap;
+    transition: transform 0.3s ease-out;
+}
+
+.btn-delete-track {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    opacity: 0;
+    transition: all var(--transition-fast);
+}
+
+.playlist-item:hover .btn-delete-track {
+    opacity: 1;
+}
+
+.btn-delete-track:hover {
+    color: #f87171;
+    transform: scale(1.1);
+}
+
+/* Drag and Drop states */
+.playlist-item[draggable="true"] {
+    cursor: grab;
+}
+
+.playlist-item:active[draggable="true"] {
+    cursor: grabbing;
+}
+
+.playlist-item.dragging {
+    opacity: 0.4;
+    border-style: dashed;
+    border-color: var(--accent-primary);
+}
+
+.playlist-empty {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Styled Slider base (same as dashboard) */
+.styled-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+}
+
+.styled-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.styled-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
