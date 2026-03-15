@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writer - Araçlar</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Global Styles & App Styles -->
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="writer-theme">
+    <div class="writer-app-container animate-fade-in">
+        
+        <!-- Left Sidebar: Character List & Management -->
+        <aside class="writer-sidebar glass-panel">
+            <header class="sidebar-header">
+                <div class="app-branding">
+                    <a href="../../index.html" class="back-btn" title="Ana Menüye Dön"><i class="fa-solid fa-arrow-left"></i></a>
+                    <h2><i class="fa-solid fa-feather-pointed"></i> Writer</h2>
+                </div>
+                <!-- Action to manage stories or global settings -->
+                <div class="header-actions">
+                    <button class="icon-btn text-danger" id="btn-delete-story" title="Mevcut Hikayeyi/Senaryoyu Sil" style="display:none;"><i class="fa-solid fa-trash"></i></button>
+                    <button class="icon-btn" id="btn-story-settings" title="Hikaye Seçimi"><i class="fa-solid fa-book"></i></button>
+                </div>
+            </header>
+
+            <div class="sidebar-search">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="character-search" placeholder="Karakter ara...">
+                </div>
+            </div>
+
+            <div class="character-list-container">
+                <!-- Select Story or Display Characters -->
+                <h3 class="list-title" id="story-title-display">Hikaye Seçilmedi</h3>
+                <ul class="character-list" id="character-list">
+                    <!-- Characters will be injected here via JS -->
+                </ul>
+
+                <!-- Always at the bottom: Add Character -->
+                <div class="add-item-btn-container">
+                    <button id="btn-add-character" class="add-item-btn">
+                        <div class="add-icon"><i class="fa-solid fa-plus"></i></div>
+                        <span>Yeni Karakter Ekle</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Chat Area -->
+        <main class="writer-chat-area glass-panel">
+            <header class="chat-header">
+                <div class="selected-character-info" id="selected-character-info" style="display: none;">
+                    <div class="avatar" id="header-avatar" style="--char-color: #3b82f6;">K</div>
+                    <div class="details">
+                        <h3 id="header-char-name">Karakter Adı</h3>
+                    </div>
+                </div>
+                <div class="no-character-selected-header" id="no-character-selected-header">
+                    <h3>Senaryo Alanı</h3>
+                </div>
+                <div class="chat-actions" id="chat-actions" style="display: none;">
+                    <!-- Act & Scene Dividers -->
+                    <button class="icon-btn action-text-btn" id="btn-add-act" title="Yeni Perde Ekle">Perde</button>
+                    <button class="icon-btn action-text-btn" id="btn-add-scene" title="Yeni Sahne Ekle">Sahne</button>
+                    <div class="divider-vertical"></div>
+                    <!-- Color picker for selected character -->
+                    <button class="icon-btn" id="btn-char-color" title="Karakter Rengini Değiştir">
+                        <i class="fa-solid fa-palette"></i>
+                    </button>
+                    <!-- Character delete button -->
+                    <button class="icon-btn text-danger" id="btn-delete-char" title="Karakteri Sil">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <!-- Input color picker hidden -->
+                    <input type="color" id="hidden-color-picker" style="display:none;">
+                </div>
+            </header>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- Initial Empty State -->
+                <div class="empty-state">
+                    <div class="empty-icon"><i class="fa-solid fa-masks-theater"></i></div>
+                    <h2>Senaryo Oluşturucuya Hoş Geldiniz</h2>
+                    <p>Soldan bir karakter seçin ve repliklerini yazmaya başlayın. Gönderdiğiniz mesajlar tıpkı bir sohbet uygulaması gibi senaryoya eklenecektir.</p>
+                </div>
+                <!-- Messages will be injected here -->
+            </div>
+
+            <footer class="chat-input-area" id="chat-input-area">
+                <button class="icon-btn" id="btn-send-emote" title="Duygu/Tavır Gönder ( )"><i class="fa-regular fa-face-smile"></i></button>
+                <button class="icon-btn" id="btn-send-action" title="Eylem/Sahne Yönergesi Gönder [ ]"><i class="fa-solid fa-person-running"></i></button>
+                <div class="input-wrapper">
+                    <textarea id="message-input" placeholder="Bir replik yazın..." rows="1" disabled></textarea>
+                </div>
+                <button class="send-btn" id="btn-send-message" disabled title="Replik Gönder">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- New/Select Story Modal -->
+    <div class="modal" id="story-modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>Hikaye Seç veya Oluştur</h2>
+            </div>
+            <div class="modal-body">
+                <ul class="story-list" id="story-list">
+                    <!-- Stories injected here -->
+                </ul>
+                <div class="new-story-form">
+                    <input type="text" id="new-story-name" placeholder="Yeni Hikaye Adı">
+                    <button id="btn-create-story" class="primary-btn">Oluştur</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Character Modal -->
+    <div class="modal" id="character-modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2 id="char-modal-title">Yeni Karakter Ekle</h2>
+                <button class="close-btn" id="btn-close-char-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="char-name">Karakter Adı</label>
+                    <input type="text" id="char-name" placeholder="Örn: Ahmet, Ayşe, Dış Ses...">
+                </div>
+                <div class="form-group">
+                    <label for="char-color">Karakter Rengi (Avatar)</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="char-color" value="#3b82f6">
+                    </div>
+                </div>
+                <button id="btn-save-character" class="primary-btn full-width">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Dialog Modal -->
+    <div class="modal" id="dialog-modal">
+        <div class="modal-content glass-panel" style="max-width: 400px; text-align: center;">
+            <div class="modal-header">
+                <h2 id="dialog-title">Uyarı</h2>
+                <button class="close-btn" id="btn-close-dialog"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p id="dialog-message" style="margin-bottom: 20px; color: var(--text-secondary);"></p>
+                <div class="form-group" id="dialog-input-group" style="display: none;">
+                    <input type="text" id="dialog-input" class="full-width">
+                </div>
+                <div class="form-group" id="dialog-checkbox-group" style="display: none; text-align: left; margin-top: 10px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-color);">
+                        <input type="checkbox" id="dialog-checkbox">
+                        <span id="dialog-checkbox-label"></span>
+                    </label>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                    <button id="btn-dialog-cancel" class="base-btn" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: transparent; color: var(--text-color); cursor: pointer;">İptal</button>
+                    <button id="btn-dialog-confirm" class="primary-btn" style="flex: 1;">Tamam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../db.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
