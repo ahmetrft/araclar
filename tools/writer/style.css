@@ -420,13 +420,6 @@
 }
 
 /* Emote and Action Message Styles */
-.message-type-emote .message-bubble,
-.message-type-action .message-bubble {
-    background: transparent;
-    border-left: none;
-    box-shadow: none;
-    padding: 4px 0;
-}
 
 .message-type-emote .message-text {
     font-style: italic;

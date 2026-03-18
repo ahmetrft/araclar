@@ -876,11 +876,11 @@ class WriterApp {
     }
 
     parseInlineFormatting(text, color) {
-        // Convert (text) to <span class="inline-emote" style="--char-color: color">(text)</span>
-        let result = text.replace(/\(([^)]+)\)/g, `<span class="inline-emote" style="--char-color: ${color}">($1)</span>`);
+        // Convert (text) to <span class="inline-emote" style="--char-color: color">text</span>
+        let result = text.replace(/\(([^)]+)\)/g, `<span class="inline-emote" style="--char-color: ${color}">$1</span>`);
 
-        // Convert [text] to <span class="inline-action" style="--char-color: color">[text]</span>
-        result = result.replace(/\[([^\]]+)\]/g, `<span class="inline-action" style="--char-color: ${color}">[$1]</span>`);
+        // Convert [text] to <span class="inline-action" style="--char-color: color">text</span>
+        result = result.replace(/\[([^\]]+)\]/g, `<span class="inline-action" style="--char-color: ${color}">$1</span>`);
 
         return result;
     }
