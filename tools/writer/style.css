@@ -484,6 +484,7 @@
     opacity: 1;
     transform: translateY(0);
     display: flex; /* Added based on instruction */
+    pointer-events: auto;
 }
 
 .message-action-btn {
@@ -818,4 +819,49 @@ textarea#message-input:disabled {
     border-radius: var(--radius-sm);
     color: white;
     outline: none;
+}
+
+/* Dialog Checkbox Styling */
+#dialog-checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+#dialog-checkbox-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background: rgba(15, 23, 42, 0.5);
+    cursor: pointer;
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+#dialog-checkbox-group input[type="checkbox"]:checked {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+#dialog-checkbox-group input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+#dialog-checkbox-group input[type="checkbox"]:hover {
+    border-color: var(--accent-primary);
 }

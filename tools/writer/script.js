@@ -57,6 +57,9 @@ class WriterApp {
             chatActions: document.getElementById('chat-actions'),
             headerAvatar: document.getElementById('header-avatar'),
             headerCharName: document.getElementById('header-char-name'),
+            btnExportStory: document.getElementById('btn-export-story'), // NEW
+            btnImportStory: document.getElementById('btn-import-story'),
+            importStoryFile: document.getElementById('import-story-file'),
         };
 
         this.palette = [
@@ -125,6 +128,13 @@ class WriterApp {
         });
         if (this.UI.btnDeleteStory) {
             this.UI.btnDeleteStory.addEventListener('click', () => this.deleteStory());
+        }
+        if (this.UI.btnExportStory) {
+            this.UI.btnExportStory.addEventListener('click', () => this.exportStory());
+        }
+        if (this.UI.btnImportStory && this.UI.importStoryFile) {
+            this.UI.btnImportStory.addEventListener('click', () => this.UI.importStoryFile.click());
+            this.UI.importStoryFile.addEventListener('change', (e) => this.importStory(e));
         }
 
         // Character Management
@@ -241,6 +251,7 @@ class WriterApp {
 
         this.UI.storyTitleDisplay.textContent = story.title;
         if (this.UI.btnDeleteStory) this.UI.btnDeleteStory.style.display = 'block';
+        if (this.UI.btnExportStory) this.UI.btnExportStory.style.display = 'block';
 
         this.renderCharacterList();
         this.renderChatMessages();
@@ -267,6 +278,7 @@ class WriterApp {
                 this.state.activeCharacterId = null;
                 this.UI.storyTitleDisplay.textContent = 'Hikaye Seçilmedi';
                 if (this.UI.btnDeleteStory) this.UI.btnDeleteStory.style.display = 'none';
+                if (this.UI.btnExportStory) this.UI.btnExportStory.style.display = 'none';
 
                 this.saveState();
 
@@ -425,10 +437,23 @@ class WriterApp {
     /* --- CHAT METHODS --- */
 
     updateChatHeader() {
-        if (!this.state.activeCharacterId) {
-            this.UI.selectedCharInfo.style.display = 'none';
+        if (!this.state.activeStoryId) {
             this.UI.chatActions.style.display = 'none';
             this.UI.noCharHeader.style.display = 'block';
+            this.UI.selectedCharInfo.style.display = 'none';
+            return;
+        }
+
+        if (!this.state.activeCharacterId) {
+            this.UI.selectedCharInfo.style.display = 'none';
+            this.UI.chatActions.style.display = 'flex';
+            this.UI.noCharHeader.style.display = 'block';
+
+            // Hide char specific actions but keep dividers
+            this.UI.btnCharColor.style.display = 'none';
+            this.UI.btnDeleteChar.style.display = 'none';
+            const vDiv = document.querySelector('.divider-vertical');
+            if (vDiv) vDiv.style.display = 'none';
             return;
         }
 
@@ -437,6 +462,11 @@ class WriterApp {
             this.UI.selectedCharInfo.style.display = 'flex';
             this.UI.chatActions.style.display = 'flex';
             this.UI.noCharHeader.style.display = 'none';
+
+            this.UI.btnCharColor.style.display = 'flex';
+            this.UI.btnDeleteChar.style.display = 'flex';
+            const vDiv = document.querySelector('.divider-vertical');
+            if (vDiv) vDiv.style.display = 'block';
 
             this.UI.headerAvatar.style.setProperty('--char-color', char.color);
             this.UI.headerAvatar.textContent = char.name.charAt(0).toUpperCase();
@@ -483,7 +513,7 @@ class WriterApp {
 
         this.showDialog({
             title: `Yeni ${typeName} Ekle`,
-            message: `${typeName} Adı veya Numarası (Örn: 1, 2, "Giriş"):`,
+            message: `${typeName} Adı veya Numarası:`,
             type: 'prompt',
             onConfirm: (name) => {
                 if (!name || name.trim() === '') return;
@@ -492,7 +522,7 @@ class WriterApp {
                     id: 'div_' + Date.now(),
                     type: 'divider',
                     dividerType: type, // 'act' or 'scene'
-                    text: `${typeName} ${name}`.trim(),
+                    text: name.trim(),
                     timestamp: Date.now()
                 };
 
@@ -587,13 +617,15 @@ class WriterApp {
                 const divClass = msg.dividerType === 'act' ? 'act-divider' : 'scene-divider';
                 const msgHtml = `
                     <div class="script-divider ${divClass}" data-id="${msg.id}">
-                        <div class="divider-text">${this.escapeHtml(msg.text)}</div>
-                        <div class="message-actions">
-                            <button class="message-action-btn" onclick="window.writerApp.editMessage('${msg.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                            <button class="message-action-btn danger" onclick="window.writerApp.deleteMessage('${msg.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
-                            <button class="message-action-btn" onclick="window.writerApp.moveMessage('${msg.id}', -1)" title="Yukarı Taşı"><i class="fa-solid fa-arrow-up"></i></button>
-                            <button class="message-action-btn" onclick="window.writerApp.moveMessage('${msg.id}', 1)" title="Aşağı Taşı"><i class="fa-solid fa-arrow-down"></i></button>
-                            <button class="message-action-btn" onclick="window.writerApp.setInsertPoint(${index})" title="İmleci Buraya Getir"><i class="fa-solid fa-i-cursor"></i></button>
+                        <div class="divider-content" style="position: relative; display: flex; align-items: center; justify-content: center;">
+                            <div class="divider-text">${this.escapeHtml(msg.text)}</div>
+                            <div class="message-actions" style="position: absolute; left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px;">
+                                <button class="message-action-btn" onclick="window.writerApp.editMessage('${msg.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                <button class="message-action-btn danger" onclick="window.writerApp.deleteMessage('${msg.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                                <button class="message-action-btn" onclick="window.writerApp.moveMessage('${msg.id}', -1)" title="Yukarı Taşı"><i class="fa-solid fa-arrow-up"></i></button>
+                                <button class="message-action-btn" onclick="window.writerApp.moveMessage('${msg.id}', 1)" title="Aşağı Taşı"><i class="fa-solid fa-arrow-down"></i></button>
+                                <button class="message-action-btn" onclick="window.writerApp.setInsertPoint(${index})" title="İmleci Buraya Getir"><i class="fa-solid fa-i-cursor"></i></button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -633,7 +665,6 @@ class WriterApp {
                         <div class="message-bubble" style="--char-color: ${char.color};">
                             <div class="message-sender-name">${char.name}</div>
                             <div class="message-text">${formattedText}</div>
-                            <div class="message-time">${timeStr}</div>
                         </div>
                         <div class="message-actions">
                             <button class="message-action-btn" onclick="window.writerApp.editMessage('${msg.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
@@ -756,6 +787,92 @@ class WriterApp {
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
+    }
+
+    exportStory() {
+        if (!this.state.activeStoryId) return;
+
+        const story = this.state.stories.find(s => s.id === this.state.activeStoryId);
+        const characters = this.state.characters[this.state.activeStoryId] || [];
+        const messages = this.state.messages[this.state.activeStoryId] || [];
+
+        const exportData = {
+            format: 'ph-script',
+            version: '1.0',
+            story: story,
+            characters: characters,
+            messages: messages
+        };
+
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        const safeTitle = story.title.replace(/[^a-z0-9ğüşöçıİĞÜŞÖÇ]/gi, '_').toLowerCase();
+        a.download = `${safeTitle}.ph`;
+
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    importStory(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const data = JSON.parse(event.target.result);
+                if (data.format !== 'ph-script' || !data.story || !data.characters || !data.messages) {
+                    alert('Geçersiz veya bozuk bir .ph dosyası seçtiniz.');
+                    return;
+                }
+
+                // Append (İçe Aktarılan) to title to distinguish
+                data.story.title = `${data.story.title} (İçe Aktarılan)`;
+
+                // Generate new ID to prevent overwrite
+                const newStoryId = 'story_' + Date.now();
+                data.story.id = newStoryId;
+                data.story.updatedAt = Date.now();
+                this.state.stories.push(data.story);
+
+                // Remap character IDs
+                const charMap = {};
+                const newCharacters = data.characters.map((c, index) => {
+                    const newCharId = 'char_' + Date.now() + '_' + index;
+                    charMap[c.id] = newCharId;
+                    return { ...c, id: newCharId };
+                });
+                this.state.characters[newStoryId] = newCharacters;
+
+                // Remap message IDs and char references
+                const newMessages = data.messages.map((m, index) => {
+                    return {
+                        ...m,
+                        id: 'msg_' + Date.now() + '_' + index,
+                        charId: m.type === 'divider' ? null : (charMap[m.charId] || m.charId)
+                    };
+                });
+                this.state.messages[newStoryId] = newMessages;
+
+                this.saveState();
+
+                // Clear input and reload
+                this.UI.importStoryFile.value = '';
+                this.loadStory(newStoryId);
+                this.closeStoryModal();
+
+            } catch (err) {
+                alert('Dosya okunurken bir hata oluştu. Lütfen geçerli bir .ph dosyası seçtiğinizden emin olun.');
+                console.error(err);
+            }
+        };
+        reader.readAsText(file);
     }
 
     parseInlineFormatting(text, color) {

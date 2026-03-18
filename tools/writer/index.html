@@ -29,6 +29,7 @@
                 <!-- Action to manage stories or global settings -->
                 <div class="header-actions">
                     <button class="icon-btn text-danger" id="btn-delete-story" title="Mevcut Hikayeyi/Senaryoyu Sil" style="display:none;"><i class="fa-solid fa-trash"></i></button>
+                    <button class="icon-btn" id="btn-export-story" title="Hikayeyi Dışa Aktar (.ph)" style="display:none;"><i class="fa-solid fa-download"></i></button>
                     <button class="icon-btn" id="btn-story-settings" title="Hikaye Seçimi"><i class="fa-solid fa-book"></i></button>
                 </div>
             </header>
@@ -124,6 +125,12 @@
                 <div class="new-story-form">
                     <input type="text" id="new-story-name" placeholder="Yeni Hikaye Adı">
                     <button id="btn-create-story" class="primary-btn">Oluştur</button>
+                </div>
+                <div style="margin-top: 15px; text-align: center;">
+                    <input type="file" id="import-story-file" accept=".ph" style="display: none;">
+                    <button id="btn-import-story" class="base-btn" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px dashed var(--border-color); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all 0.2s;">
+                        <i class="fa-solid fa-file-import"></i> .ph Dosyasından İçe Aktar
+                    </button>
                 </div>
             </div>
         </div>
